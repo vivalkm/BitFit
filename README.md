@@ -2,9 +2,9 @@
 
 Submitted by: **Lincoln Li**
 
-**BitFit** is a health metrics app that allows users to track ... [TODO]
+**BitFit** is a health metrics app that allows users to track nutrition calories and mark favorability
 
-Time spent: **X** hours spent in total
+Time spent: **4** hours spent in total
 
 ## Required Features
 
@@ -27,6 +27,7 @@ The following **additional** features are implemented:
 
 - [x] **Swipe to left to remove an entry from database**
 - [x] **Long click to search item on google**
+- [x] **Click to toggle like or not like for an entry, and update the entry in database**
 
 ## Video Walkthrough
 
