@@ -10,5 +10,5 @@ data class ItemEntity(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "amount") val amount: Float,
     @ColumnInfo(name = "notes") val notes: String,
-    @ColumnInfo(name = "isDone") val isDone: Int
+    @ColumnInfo(name = "isLiked") val isLiked: Int
 )

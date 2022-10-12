@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
         animationDrawable.setExitFadeDuration(2500)
         animationDrawable.start()
 
-        wlStatusImages = ArrayList(listOf(R.drawable.ic_check_box_blank, R.drawable.ic_check_box))
+        wlStatusImages = ArrayList(listOf(R.drawable.ic_baseline_favorite_border_24, R.drawable.ic_baseline_favorite_24))
 
         val editTextName = findViewById<EditText>(R.id.editTextName)
         val editTextNumber = findViewById<EditText>(R.id.editTextNumber)
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
                         name = name,
                         amount = number,
                         notes = notes,
-                        isDone = 0
+                        isLiked = 0
                     )
                 )
             }
@@ -113,12 +113,17 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
     // click to toggle check status
     override fun onItemClick(position: Int) {
         val item = wlItems[position]
-        if (item.isDone == 1) {
-            item.isDone = 0
+        if (item.isLiked == 1) {
+            item.isLiked = 0
         } else {
-            item.isDone = 1
+            item.isLiked = 1
         }
-        adapter.notifyItemChanged(position)
+        lifecycleScope.launch(IO) {
+            (application as BitFitApplication).db.itemDao().update(
+                item.id, item.isLiked
+            )
+        }
+        reFresh()
     }
 
     // long click to open url in notes, if not valid link then search for the name of item on google
@@ -154,7 +159,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
                         entity.name,
                         entity.amount,
                         entity.notes,
-                        entity.isDone
+                        entity.isLiked
                     )
                 }.also { mappedList ->
                     wlItems.clear()

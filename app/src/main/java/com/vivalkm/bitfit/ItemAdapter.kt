@@ -60,7 +60,7 @@ class ItemAdapter(
         viewHolder.nameTextView.text = wlItem.name
         viewHolder.numberTextView.text = wlItem.number.toString()
         viewHolder.noteTextView.text = wlItem.note
-        viewHolder.statusImageView.setImageResource(wlImages[wlItem.isDone])
+        viewHolder.statusImageView.setImageResource(wlImages[wlItem.isLiked])
     }
 
     override fun getItemCount(): Int {

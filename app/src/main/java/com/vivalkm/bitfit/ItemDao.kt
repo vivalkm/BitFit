@@ -15,4 +15,7 @@ interface ItemDao {
 
     @Query("DELETE FROM item_table WHERE id = :id")
     fun delete(id: Long)
+
+    @Query("UPDATE item_table SET isLiked = :isLiked WHERE id = :id")
+    fun update(id: Long, isLiked: Int)
 }
