@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_list"
+    android:id="@+id/mainLayout"
+    tools:context=".MainActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemsRv"
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        android:padding="5sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_margin="5sp"
+        android:hint="Item Name"
+        android:textColor="@color/textColor1"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNote"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="110dp"
+        android:layout_height="40dp"
+        android:inputType="numberDecimal"
+        android:hint="Amount"
+        android:textColor="@color/textColor1"
+        android:layout_margin="5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNote"
+         />
+
+    <EditText
+        android:id="@+id/editTextNote"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:inputType="textPersonName"
+        android:hint="Notes"
+        android:textColor="@color/textColor1"
+        android:layout_margin="5sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteY="674dp" />
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="Add Item"
+        android:layout_margin="5sp"
+        android:shadowColor="#d4a373"
+        android:backgroundTint="#bc6c25"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
