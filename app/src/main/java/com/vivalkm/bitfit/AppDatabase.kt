@@ -5,9 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ItemEntity::class], version = 1)
+// The class must be an abstract class that extends RoomDatabase
+@Database(entities = [ItemEntity::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
-
+    // For each DAO class that is associated with the database,
+    // the database class must define an abstract method that has zero arguments
+    // and returns an instance of the DAO class
     abstract fun itemDao(): ItemDao
 
     companion object {
@@ -24,6 +27,6 @@ abstract class AppDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java, "Items-db"
-            ).build()
+            ).fallbackToDestructiveMigration().build()
     }
 }
