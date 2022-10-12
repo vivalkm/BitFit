@@ -60,8 +60,8 @@
         android:layout_height="wrap_content"
         android:text="Add Item"
         android:layout_margin="5sp"
-        android:shadowColor="#d4a373"
-        android:backgroundTint="#bc6c25"
+        android:shadowColor="#606c38"
+        android:backgroundTint="#283618"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

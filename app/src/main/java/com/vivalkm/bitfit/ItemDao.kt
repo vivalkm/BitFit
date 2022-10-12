@@ -13,6 +13,6 @@ interface ItemDao {
     @Insert
     fun insert(item: ItemEntity)
 
-    @Query("DELETE FROM item_table")
-    fun deleteAll()
+    @Query("DELETE FROM item_table WHERE id = :id")
+    fun delete(id: Long)
 }

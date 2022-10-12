@@ -31,14 +31,14 @@
                 app:layout_constraintBottom_toBottomOf="@id/nameTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/nameTextView"
-                app:tint="@color/textColor1" />
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/textColor1"
+                android:textColor="@color/white"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toTopOf="@+id/noteTextView"
                 app:layout_constraintStart_toEndOf="@+id/statusImageView"
@@ -49,7 +49,7 @@
                 android:id="@+id/numberTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColor1"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -59,7 +59,7 @@
                 android:id="@+id/noteTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColor1"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameTextView"
                 tools:text="Here is some notes." />

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [ItemEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun articleDao(): ItemDao
+    abstract fun itemDao(): ItemDao
 
     companion object {
 
@@ -23,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                AppDatabase::class.java, "Articles-db"
+                AppDatabase::class.java, "Items-db"
             ).build()
     }
 }

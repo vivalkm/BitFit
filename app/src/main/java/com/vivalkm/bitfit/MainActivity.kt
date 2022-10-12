@@ -11,9 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), RecyclerViewInterface {
     lateinit var wlItems: MutableList<Item>;
@@ -46,6 +49,8 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
         // Set layout manager to position the items
         itemsRv.layoutManager = LinearLayoutManager(this)
 
+        reFresh()
+
         // swipe left to remove item
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
@@ -61,8 +66,15 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // this method is called when we swipe our item to right direction.
                 val position = viewHolder.adapterPosition
-                wlItems.removeAt(position)
-                adapter.notifyItemRemoved(position)
+
+                // delete item from database
+                lifecycleScope.launch(IO) {
+                    (application as BitFitApplication).db.itemDao().delete(
+                        wlItems[position].id
+                    )
+                }
+                // reload recycler view
+                reFresh()
             }
         }).attachToRecyclerView(itemsRv)
 
@@ -75,13 +87,22 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
             } catch (e: NumberFormatException) {
                 0.0F
             }
-            val note = editTextNote.text.toString()
-            val item = Item(name, number, note, 0)
-            // update itemList
-            wlItems.add(item)
+            val notes = editTextNote.text.toString()
 
-            // notify adaptor
-            adapter.notifyItemInserted(wlItems.size - 1)
+            // We need to update any ItemDao interaction to run on another thread
+            // Since we are using Room and writing to files, we want to use the IO Dispatcher
+            lifecycleScope.launch(IO) {
+                (application as BitFitApplication).db.itemDao().insert(
+                    ItemEntity(
+                        name = name,
+                        amount = number,
+                        notes = notes,
+                        isDone = 0
+                    )
+                )
+            }
+            reFresh()
+
             // clean up input areas
             editTextName.text.clear()
             editTextNumber.text.clear()
@@ -100,7 +121,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
         adapter.notifyItemChanged(position)
     }
 
-    // long click to open url in notes
+    // long click to open url in notes, if not valid link then search for the name of item on google
     override fun onItemLongClick(position: Int) {
         val item = wlItems[position]
         if (item.note.isNotEmpty()) {
@@ -108,10 +129,38 @@ class MainActivity : AppCompatActivity(), RecyclerViewInterface {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.note))
                 ContextCompat.startActivity(this, browserIntent, null)
             } catch (e: ActivityNotFoundException) {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=" + item.note))
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.google.com/search?q=" + item.name)
+                )
                 ContextCompat.startActivity(this, browserIntent, null)
             } catch (e: ActivityNotFoundException) {
-                Toast.makeText(this, "Not able to look up the item on internet.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Not able to look up the item on internet.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    // reload data from db and refresh recycler view list
+    fun reFresh() {
+        lifecycleScope.launch {
+            (application as BitFitApplication).db.itemDao().getAll().collect { databaseList ->
+                databaseList.map { entity ->
+                    Item(
+                        entity.id,
+                        entity.name,
+                        entity.amount,
+                        entity.notes,
+                        entity.isDone
+                    )
+                }.also { mappedList ->
+                    wlItems.clear()
+                    wlItems.addAll(mappedList)
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
     }
