@@ -5,5 +5,4 @@ class Item(
     var number: Float,
     var note: String,
     var isDone: Int
-) {
-}
+) : java.io.Serializable
