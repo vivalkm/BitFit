@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_log"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_menu_log_24"
+        android:title="Log"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_dashboard"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_menu_dashboard_24"
+        android:title="Dashboard"
+        app:showAsAction="ifRoom" />
+</menu>
