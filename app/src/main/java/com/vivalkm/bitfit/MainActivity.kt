@@ -6,10 +6,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    lateinit var wlItems: MutableList<Item>;
-    lateinit var wlStatusImages: MutableList<Int>
-    lateinit var adapter: ItemAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         val dashboardFragment = DashboardFragment(itemDao)
 
         navbar.setOnItemSelectedListener { item ->
-            lateinit var fragment: Fragment
             // Call helper method to swap the FrameLayout with the fragment
             when (item.itemId) {
                 R.id.action_log -> replaceFragment(logFragment)

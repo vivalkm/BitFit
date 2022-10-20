@@ -75,8 +75,7 @@ class LogFragment(private val itemDao: ItemDao) : Fragment(), RecyclerViewInterf
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                // this method is called
-                // when the item is moved.
+                // this method is called when the item is moved.
                 return false
             }
 
@@ -186,6 +185,4 @@ class LogFragment(private val itemDao: ItemDao) : Fragment(), RecyclerViewInterf
             }
         }
     }
-
-
 }
