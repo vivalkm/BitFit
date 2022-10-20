@@ -17,14 +17,14 @@ class MainActivity : AppCompatActivity() {
         val itemDao = (application as BitFitApplication).db.itemDao()
         val navbar = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         val logFragment = LogFragment(itemDao)
-        val dashboardFragment = LogFragment(itemDao)
+        val dashboardFragment = DashboardFragment(itemDao)
 
         navbar.setOnItemSelectedListener { item ->
             lateinit var fragment: Fragment
             // Call helper method to swap the FrameLayout with the fragment
             when (item.itemId) {
                 R.id.action_log -> replaceFragment(logFragment)
-                R.id.action_dashboard -> replaceFragment(logFragment)
+                R.id.action_dashboard -> replaceFragment(dashboardFragment)
             }
             true
         }
@@ -37,6 +37,13 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.main_frame_layout, logFragment)
+        fragmentTransaction.commit()
+    }
+
+    private fun replaceFragment(dashboardFragment: DashboardFragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.main_frame_layout, dashboardFragment)
         fragmentTransaction.commit()
     }
 }
